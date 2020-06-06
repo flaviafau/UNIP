@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editar aluno</title>
+
+    <link rel="stylesheet" href="~/Content/Css/reset.css" />
+    <link rel="stylesheet" href="~/Content/Css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Css/nova-tarefa.css" />
+    <link rel="stylesheet" href="~/Content/Css/barra-navegacao.css" />
+    <link rel="stylesheet" href="~/Content/Css/footer.css" />
+</head>
+
+<body>
+
+    <nav>
+        <div id="all-links-navbar" style="display: inline-flex;min-width: 360px;">
+
+            <a href="/Administrador/Logout" class="link-navbar" id="nav-logout">Logout</a>
+
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Tarefas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Tarefa/Index">Buscar</a>
+                    <a class="dropdown-item" href="/Tarefa/Form">Cadastrar</a>
+                    <a class="dropdown-item" href="/Tarefa/Listar">Listar</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Alunos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Aluno/FormNovoAluno">Cadastrar</a>
+                    <a class="dropdown-item" href="/Aluno/Listar">Listar</a>
+                </div>
+            </div>
+
+            <a href="/Administrador/Form" class="link-navbar" id="nav-logout">Cadastrar administrador</a>
+        </div>
+
+        <div id="div-nav-username">
+            <label id="usuario-nome-navbar" class="info-navbar">Olá @ViewBag.Username.</label>
+        </div>
+
+        <label id="data-navbar" class="info-navbar">@ViewBag.DataHoje</label>
+    </nav>
+
+
+    <div class="container">
+        <form action="/Aluno/Atualizar" method="POST">
+            @Html.AntiForgeryToken()
+            <div class="box-detalhe" style="height: 1430px;">
+                <h2>Editar aluno</h2>
+                @*Aluno*@
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" name="Nome" value="@ViewBag.Aluno.Nome" required/>
+                    <span style="color:lightcoral;">@Html.ValidationMessage("Nome")</span>
+                </div>
+                <div class="form-group">
+                    <label>Data de nascimento</label>
+                    <input type="date" class="form-control" name="DataNascimento" value="@ViewBag.Aluno.DataNascimento.ToString("yyyy-MM-dd")" required/>
+                </div>
+                <div class="form-group">
+                    <label>Sexo</label>
+                    <input type="text" class="form-control" name="Sexo" value="@ViewBag.Aluno.Sexo" required/>
+                </div>
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" class="form-control" name="Cpf" value="@ViewBag.Aluno.Cpf" id="CPF" required/>
+                </div>
+                <div class="form-group">
+                    <label>Matricula</label>
+                    <input type="number" class="form-control" name="Matricula" value="@ViewBag.Aluno.Matricula" required/>
+                    <span style="color:lightcoral;">@Html.ValidationMessage("Matricula")</span>
+                </div>
+                <div class="form-group">
+                    <label>Serie</label>
+                    <input type="text" class="form-control" name="Serie" value="@ViewBag.Aluno.Serie" required/>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" class="form-control" name="Telefone" value="@ViewBag.Aluno.Telefone" id="CELULAR" required/>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="Email" value="@ViewBag.Aluno.Email" required/>
+                </div>
+                @* Endereco *@
+                <hr />
+                <div class="form-group">
+                    <label>Logradouro</label>
+                    <input type="text" class="form-control" name="Endereco.Logradouro" value="@ViewBag.Aluno.Endereco.Logradouro" required/>
+                </div>
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" class="form-control" name="Endereco.Cep" value="@ViewBag.Aluno.Endereco.Cep" id="CEP" required/>
+                    <span style="color:lightcoral">@Html.ValidationMessage("Endereco.Cep")</span>
+                </div>
+                <div class="form-group">
+                    <label>Numero</label>
+                    <input type="text" class="form-control" name="Endereco.Numero" value="@ViewBag.Aluno.Endereco.Numero" required/>
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <input type="text" class="form-control" name="Endereco.Bairro" value="@ViewBag.Aluno.Endereco.Bairro" required/>
+                </div>
+                @* Cidade *@
+                <div class="form-group">
+                    <label>Cidade</label>
+                    <input type="text" class="form-control" name="Endereco.Cidade" value="@ViewBag.Aluno.Endereco.Cidade" required/>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <input type="text" class="form-control" name="Endereco.Estado" value="@ViewBag.Aluno.Endereco.Estado" required/>
+                </div>
+                <input type="hidden" name="Id" value="@(ViewBag.Aluno.Id)" />
+                <input type="hidden" name="Endereco.Id" value="@(ViewBag.Aluno.Endereco.Id)" />
+                <br />
+                <button class="btn btn-success btn-block" type="submit" style="margin-bottom: 150px">Atualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+
+    @* Mask *@
+    <script>
+        $(document).ready(function () {
+            $('#CEP').mask('00000-000');
+            $('#CPF').mask('000.000.000-00');
+            $('#CELULAR').mask('(00) 00000-0000');
+        });
+    </script>
+
+    <footer>
+        <span>&copy; Copyright 2018 - Anderson Marques.</span>
+    </footer>
+</body>
+
+</html>

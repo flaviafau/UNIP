@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Nova tarefa</title>
+
+    <link rel="stylesheet" href="~/Content/Css/reset.css" />
+    <link rel="stylesheet" href="~/Content/Css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Css/nova-tarefa.css" />
+    <link rel="stylesheet" href="~/Content/Css/barra-navegacao.css" />
+    <link rel="stylesheet" href="~/Content/Css/footer.css" />
+</head>
+
+<body>
+
+    <nav>
+        <div id="all-links-navbar" style="display: inline-flex;min-width: 360px;">
+            <a href="/Administrador/Logout" class="link-navbar" id="nav-logout">Logout</a>
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Tarefas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Tarefa/Index">Buscar</a>
+                    <a class="dropdown-item" href="/Tarefa/Form">Cadastrar</a>
+                    <a class="dropdown-item" href="/Tarefa/Listar">Listar</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Alunos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Aluno/FormNovoAluno">Cadastrar</a>
+                    <a class="dropdown-item" href="/Aluno/Listar">Listar</a>
+                </div>
+            </div>
+
+            <a href="/Administrador/Form" class="link-navbar" id="nav-logout">Cadastrar administrador</a>
+        </div>
+
+        <div id="div-nav-username">
+            <label id="usuario-nome-navbar" class="info-navbar">Olá @ViewBag.Username.</label>
+        </div>
+
+        <label id="data-navbar" class="info-navbar">@ViewBag.DataHoje</label>
+    </nav>
+
+
+
+    <div class="container">
+        <form action="/Tarefa/Cadastrar" method="POST">
+            @Html.AntiForgeryToken()
+            <div class="box-detalhe">
+                <h2>Nova tarefa</h2>
+                <div class="form-group">
+                    <label>Tipo de tarefa</label>
+                    <select class="form-control" name="tipoDaTarefa">
+                        <option value="Atividade_Complementar">Atividade complementar</option>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Prova">Prova</option>
+                        <option value="DP">DP</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    <span style="color:red;">@Html.ValidationMessage("TipoDaTarefa")</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Data limite para entrega</label>
+                    <input type="date" class="form-control" name="DataLimite" value="@ViewBag.Tarefa.DataLimite" />
+                    <span style="color:red;">@Html.ValidationMessage("erro-data")</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea type="text" class="form-control" rows="3" name="Descricao">@ViewBag.Tarefa.Descricao</textarea>
+                    <span style="color:red;">@Html.ValidationMessage("Descricao")</span>
+                </div>
+
+                <input type="hidden" name="IdAdmin" value="@ViewBag.usuarioID" />
+
+                <button class="btn btn-success btn-block" type="submit">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <footer>
+        <span>&copy; Copyright 2018 - Anderson Marques.</span>
+    </footer>
+</body>
+
+</html>

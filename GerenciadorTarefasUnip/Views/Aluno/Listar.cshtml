@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Listagem de alunos</title>
+
+    <link rel="stylesheet" href="~/Content/Css/reset.css" />
+    <link rel="stylesheet" href="~/Content/Css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Css/listagem-tarefa.css" />
+    <link rel="stylesheet" href="~/Content/Css/barra-navegacao.css" />
+    <link rel="stylesheet" href="~/Content/Css/footer.css" />
+    <link rel="stylesheet" href="~/Content/Css/listagem-alunos.css" />
+</head>
+
+<body>
+
+    <nav>
+        <div id="all-links-navbar" style="display: inline-flex;min-width: 360px;">
+            <a href="/Administrador/Logout" class="link-navbar" id="nav-logout">Logout</a>
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Tarefas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Tarefa/Index">Buscar</a>
+                    <a class="dropdown-item" href="/Tarefa/Form">Cadastrar</a>
+                    <a class="dropdown-item" href="/Tarefa/Listar">Listar</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <a class="dropdown-toggle link-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   style="color:#a9a9a9">
+                    Alunos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/Aluno/FormNovoAluno">Cadastrar</a>
+                    <a class="dropdown-item" href="/Aluno/Listar">Listar</a>
+                </div>
+            </div>
+
+            <a href="/Administrador/Form" class="link-navbar" id="nav-logout">Cadastrar administrador</a>
+        </div>
+
+        <div id="div-nav-username">
+            <label id="usuario-nome-navbar" class="info-navbar">Olá @ViewBag.Username.</label>
+        </div>
+
+        <label id="data-navbar" class="info-navbar">@ViewBag.DataHoje</label>
+    </nav>
+
+
+    <div class="container">
+
+        <h2>Listagem de alunos</h2>
+
+        <table class="table">
+            <thead>
+            <th scope="col">Nome</th>
+            <th scope="col">Matricula</th>
+            <th scope="col">Série</th>
+            <th scope="col">Opções</th>
+            </thead>
+
+
+            @{
+                foreach(var aluno in ViewBag.Alunos) {
+                    <tbody>
+                        <tr>
+                            <td>@aluno.Nome</td>
+                            <td>@aluno.Matricula</td>
+                            <td>@aluno.Serie</td>
+                            <td>
+                                <a class="btn btn-success" href="/Aluno/Informacoes/@aluno.Id">Informações</a>
+                                <a class="btn btn-primary" href="/DiarioDeNota/BuscarTarefas/@aluno.Id">Atribuir Nota</a>
+                                <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#addFalta@(aluno.Id)">Atribuir Falta</a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <div class="modal fade" id="addFalta@(aluno.Id)" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Atribuir falta</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Deseja realmente atribuir uma falta a este aluno?
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                                    <form action="/Aluno/AddFalta/@(aluno.Id)" method="POST">
+                                        @Html.AntiForgeryToken()
+                                        <button class="btn btn-danger" type="submit">Atribuir falta</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+
+        </table>
+
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <footer>
+        <span>&copy; Copyright 2018 - Anderson Marques.</span>
+    </footer>
+</body>
+</html>
